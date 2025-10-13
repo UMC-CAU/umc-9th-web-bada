@@ -25,6 +25,8 @@ const LoginPage =() => {
             const response = await postSignin(values);
             localStorage.setItem("accessToken", response.data.accessToken);
             console.log(response);
+
+            alert("로그인 성공!");
         }catch(error) {
             alert(error?.message);
         }

@@ -16,6 +16,7 @@ export type ResponseSignupDto = CommonResponse<{
     avatar: string | null;
     createdAt: Date;
     updateaAt: Date;
+    success: boolean;
 }>;
 
 export type RequestSigninDto={
