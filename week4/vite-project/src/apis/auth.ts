@@ -21,11 +21,23 @@ export const postSignin = async (body: RequestSigninDto): Promise<ResponseSignin
     return data;
 };
 
-export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
+/*export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
     const token = localStorage.getItem("accessToken");
     return axios.get("https://umc-web.kyeoungwoon.kr/v1/users/me", {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }).then(res => res.data);
+};*/
+
+export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
+    
+    const { data } = await axiosInstance.get("v1/users/me");
+    
+    return data;
 };
+
+export const postLogout = async () => {
+    const {data} = await axiosInstance.post("v1/auth/signout");
+    return data;
+}

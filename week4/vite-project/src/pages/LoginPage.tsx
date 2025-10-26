@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { postSignin } from "../apis/auth.ts";
 import useForm from "../hooks/useForm";
 import {type UserSigninInformation, validateSignin} from "../utils/validate.ts";
+import { useAuth } from "../context/AuthContext.tsx";
 
 
 
 const LoginPage =() => {
-    //const {setItem} = useLocalStorage(LOCAL_STORAGE_KEY.accessToken)
+    const{login} = useAuth();
 
     const { values, errors, touched, getInputProps} = useForm<UserSigninInformation>({
         initialValue: {
@@ -19,19 +19,13 @@ const LoginPage =() => {
 
 
     const handleSubmit= async()=> {
-        console.log(values);
-
-        try {
-            const response = await postSignin(values);
-            localStorage.setItem("accessToken", response.data.accessToken);
-            console.log(response);
-
-            alert("로그인 성공!");
-        }catch(error) {
-            alert(error?.message);
-        }
+        await login(values);
 
     };
+
+    const handleGoogleLogin = () => {
+        window.location.href = "https://umc-web.kyeoungwoon.kr/v1/auth/google/login";
+    }
     
     const isDisabled = 
     Object. values(errors || {}).some((error)=> error.length > 0) ||
@@ -61,6 +55,17 @@ const LoginPage =() => {
                 className = "w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300">
                     로그인
                 </button>
+                <button
+                type="button"
+                onClick={handleGoogleLogin}
+                
+                className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300"
+            >
+                <div className="flex items-center justify-center gap-4">
+                    <img src={'/images/google.jpeg'} alt="Google Logo Image" className="w-5 h-5"/>
+                    <span>구글 로그인</span>
+                </div>
+            </button>
                 <Link to={"/"}>
           <div>HomePage</div>
         </Link>

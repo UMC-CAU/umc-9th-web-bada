@@ -54,7 +54,7 @@ const SignupPage =() => {
     let currentFields: (keyof FormFields)[] = [];
     if (step === 1) currentFields = ["email"];
     if (step === 2) currentFields = ["password", "passwordCheck"];
-    if (step === 3) currentFields = ["nickName"];
+    if (step === 3) currentFields = ["name"];
 
     const valid = await trigger(currentFields);
     if (valid) {
