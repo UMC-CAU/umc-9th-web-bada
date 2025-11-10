@@ -1,4 +1,3 @@
-import axios from "axios";
 import {type RequestSignupDto, type RequestSigninDto, type ResponseSigninDto, type ResponseSignupDto, type ResponseMyInfoDto} from "../types/auth.ts";
 import axiosInstance from "./axios";
 //import { LOCAL_STORAGE_KEY } from "../constants/key.ts";

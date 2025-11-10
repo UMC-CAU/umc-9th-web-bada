@@ -7,9 +7,10 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig { _retry?:
 let refreshPromise: Promise<string> | null = null;
 
 const axiosInstance = axios.create({
-  // baseURL: 'http://localhost:8000',
+   baseURL: 'http://localhost:8000',
   // 필요에 따라 v1을 포함하셔도 됩니다
-    baseURL: "https://umc-web.kyeoungwoon.kr/",
+    //baseURL: "https://umc-web.kyeoungwoon.kr/",
+    withCredentials: true,
     headers: {
         "Content-Type": "application/json",
     },

@@ -10,6 +10,10 @@ import { AuthProvider } from './context/AuthContext.tsx';
 import { type RouteObject } from 'react-router-dom';
 import ProtectedLayout from './layouts/ProtectedLayout.tsx';
 import GoogleLoginRedirectPage from './pages/GoogleLoginRedirectPage.tsx';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { queryClient } from './hooks/queries/useGetLpList.ts';
+
 
 const publicRoutes: RouteObject[] = [
   {
@@ -40,11 +44,17 @@ const routes = [...publicRoutes, ...protectedRoutes];
 
 const router = createBrowserRouter(routes);
 
+
+
 function App() {
   return (
-  <AuthProvider>
+  <QueryClientProvider client ={queryClient}>
+    <AuthProvider>
     <RouterProvider router={router} />
-  </AuthProvider>);
+  </AuthProvider>
+  {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false}/>}
+  </QueryClientProvider>
+  );
 }
 
 export default App;
