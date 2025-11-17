@@ -1,5 +1,3 @@
-import { PAGINATION_ORDER } from "../enums/common";
-
 export type CommonResponse<T> ={
     status: boolean;
     statusCode: number;
@@ -30,5 +28,5 @@ export type PaginationDto = {
   cursor?: number;
   limit?: number;
   search?: string;
-  order?: PAGINATION_ORDER;
+  order?: 'asc' | 'desc';
 };

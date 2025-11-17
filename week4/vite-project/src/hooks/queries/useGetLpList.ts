@@ -8,7 +8,7 @@ export const queryClient = new QueryClient();
 
 function useGetLpList({ cursor, search, order, limit }: PaginationDto) {
   return useQuery({
-    queryKey: [QUERY_KEY, search, order],
+    queryKey: [QUERY_KEY, search, order,cursor ],
     queryFn: () =>
       getLpList({
         cursor,

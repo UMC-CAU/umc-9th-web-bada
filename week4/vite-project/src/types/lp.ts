@@ -1,4 +1,5 @@
 import { type CursorBasedResponse } from "./common.ts";
+import type { ApiResponse } from "./api.ts";
 
 export type Tag = {
   id: number;
@@ -25,3 +26,37 @@ export type Lp = {
 };
 
 export type ResponseLpListDto = CursorBasedResponse<Lp[]>;
+
+
+export interface LpListData {
+  data: Lp[]
+  nextCursor: number | null
+  hasNext: boolean
+}
+
+export type LpListResponse = ApiResponse<LpListData>
+
+export type LpDetailResponse = ApiResponse<Lp>
+
+export interface CreateLpRequest {
+  title: string
+  content: string
+  thumbnail: string
+  tags: string[]
+  published: boolean
+}
+
+export interface UpdateLpRequest {
+  title?: string
+  content?: string
+  thumbnail?: string
+  tags?: string[]
+  published?: boolean
+}
+
+export interface GetLpsParams {
+  cursor?: number
+  limit?: number
+  search?: string
+  order?: 'asc' | 'desc'
+}
