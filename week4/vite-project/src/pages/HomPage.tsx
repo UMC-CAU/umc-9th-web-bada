@@ -5,18 +5,21 @@ import { useEffect } from "react";
 import LpCard from "../components/LpCard/LpCard.tsx";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList.tsx";
 import { useQueryClient } from "@tanstack/react-query";
+import useDebounce from "../hooks/useDebounce.ts";
+
 
 
 
 const HomePage =() => {
     const [search, setSearch]: [string, React.Dispatch<React.SetStateAction<string>>] = useState("");
+    const debouncedQuery= useDebounce(search, 300);
 
     const [order, setOrder] = useState<'asc' | 'desc'>('desc')
     const queryClient = useQueryClient();
 
 
     const { data: lps, isFetching, hasNextPage, fetchNextPage, isPending, isError } =
-    useGetInfiniteLpList({ limit: 50, search, order});
+    useGetInfiniteLpList(50, debouncedQuery, order);
     console.log("LPs data:", lps);
 
     const {ref, inView} = useInView({
@@ -26,14 +29,18 @@ const HomePage =() => {
 
     // 정렬이나 검색이 바뀌면 쿼리 무효화 -> 새로 가져오기
   useEffect(() => {
+
+    // 안전하게 기존 쿼리 취소하고(있는 경우) 새로 fetch하도록 함
+    queryClient.cancelQueries({ queryKey: ["lps", debouncedQuery, order] });
+
   queryClient.invalidateQueries({
-    queryKey: ["lps", search, order],
+    queryKey: ["lps", debouncedQuery, order],
   });
-}, [search, order, queryClient]);
+}, [debouncedQuery, order, queryClient]);
 
     useEffect(() => {
   if (inView) {
-    !isFetching && hasNextPage && fetchNextPage();
+    if (!isFetching && hasNextPage) fetchNextPage();
   }
 }, [inView, isFetching, hasNextPage, fetchNextPage]);
 

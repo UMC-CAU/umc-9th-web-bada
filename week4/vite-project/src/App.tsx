@@ -14,6 +14,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from './hooks/queries/useGetLpList.ts';
 import LpDetail from './pages/LpDetail.tsx';
+import ThrottlePage from './pages/ThrottlePage.tsx';
 
 
 const publicRoutes: RouteObject[] = [
@@ -27,6 +28,7 @@ const publicRoutes: RouteObject[] = [
       {path:"signup", element: <SignupPage/>},
       {path: "v1/auth/google/callback", element: <GoogleLoginRedirectPage/>},
       { path: "lp/:lpId", element: <LpDetail /> },
+      {path: "/throttle", element: <ThrottlePage/>},
   ],
   },
 ];
